@@ -1,15 +1,8 @@
-FROM node:8.12.0-alpine
+# Container image that runs your code
+FROM alpine:3.10
 
-# directory for the app in the container
-WORKDIR /usr/app
+# Copies your code file from your action repository to the filesystem path `/` of the container
+COPY entrypoint.sh /entrypoint.sh
 
-# copies all the app's files from host into the container folder which 
-# might include the node_modules dir if npm install executed in the host
-COPY . /usr/app
-
-# removes any existing node_modules folder
-# this prevents the host's node_modules from being used in the container
-# which could cause issues with native binaries such as node_sass.
-RUN rm -rf /usr/app/node_modules/
-
-RUN npm install
+# Code file to execute when the docker container starts up (`entrypoint.sh`)
+ENTRYPOINT ["/entrypoint.sh"]
