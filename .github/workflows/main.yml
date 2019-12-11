@@ -1,27 +1,25 @@
 on: [push]
 
 jobs:
-  docker_build_job:
-    runs-on: ubuntu-latest
-    name: Build and publish Docker image
-    steps:
-    # Checkout code from repository to virtual machine
-    - name: Checkout
-      uses: actions/checkout@v1
-    # Login to GitHub's Docker image repository
-    - name: Docker login
-      uses: azure/docker-login@v1
-      with:
-        login-server: docker.pkg.github.com
-        username: ${{ secrets.GITHUB_USERNAME }}
-        password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
-    # Build & push Docker image 
-    - run: |
-        docker build . -t docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
-        docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
+#  docker_build_job:
+#    runs-on: ubuntu-latest
+#    name: Build and publish Docker image
+#    steps:
+#    # Checkout code from repository to virtual machine
+#    - name: Checkout
+#      uses: actions/checkout@v1
+#    # Login to GitHub's Docker image repository
+#    - name: Docker login
+#      uses: azure/docker-login@v1
+#      with:
+#        login-server: docker.pkg.github.com
+#        username: ${{ secrets.GITHUB_USERNAME }}
+#        password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+#    # Build & push Docker image 
+#    - run: |
+#        docker build . -t docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
+#        docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
   setup_kubernetes_job:
-    needs:
-      docker_build_job
       runs-on: ubuntu-latest
       name: Deploy to kubernetes
       steps:
