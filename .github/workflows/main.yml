@@ -1,23 +1,21 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  docker_build_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Build and publish Docker image
     steps:
-    # To use this repository's private action, you must check out the repository
+    # Checkout code from repository to virtual machine
     - name: Checkout
       uses: actions/checkout@v1
-    #- uses: ./ # Uses an action in the root directory
-    - name: Docker build
-      run: |
-        docker build -t group01/cccatalog .
-        echo "Build Image"
-    #- name: Hello world action step
-      #id: hello
-      #uses: ./
-      #with:
-        #who-to-greet: 'Mona the Octocat'
-    # Use the output from the `hello` step
-    #- name: Get the output time
-      #run: echo "The time was ${{ steps.hello.outputs.time }}"  
+    # Login to GitHub's Docker image repository
+    - name: Docker login
+      uses: azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: ${{ secrets.GITHUB_USERNAME }}
+        password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+    # Build & push Docker image 
+    - run: |
+        docker build . -t docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
+        docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
