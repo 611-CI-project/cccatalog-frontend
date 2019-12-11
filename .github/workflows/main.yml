@@ -30,6 +30,7 @@ jobs:
         id: install
       - name: Decrypt large secret
         uses: actions/checkout@v1
+      - name: run decrypt script
         run: ./scripts/decrypt.sh
         env:
           DECRYPT_CONF: ${{ secrets.DECRYPT_CONF }} 
