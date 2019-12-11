@@ -31,7 +31,7 @@ jobs:
       - name: Decrypt large secret
         uses: actions/checkout@v1
       - name: run decrypt script
-        run: ./entrypoint.sh
+        run: ./scripts/decrypt.sh
         env:
           DECRYPT_CONF: ${{ secrets.DECRYPT_CONF }} 
 
