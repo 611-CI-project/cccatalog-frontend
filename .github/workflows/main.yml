@@ -29,8 +29,8 @@ jobs:
           version: 'latest' # default is latest stable
         id: install
       steps:
-      - name: Decrypt large secret
       - uses: actions/checkout@v1
+      - name: Decrypt large secret
         run: ./scripts/decrypt.sh
         env:
           DECRYPT_CONF: ${{ secrets.DECRYPT_CONF }} 
