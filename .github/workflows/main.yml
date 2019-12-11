@@ -24,12 +24,12 @@ jobs:
       name: Deploy to kubernetes
       steps:
       - name: install kubectl
-      - uses: azure/setup-kubectl@v1
+        uses: azure/setup-kubectl@v1
         with:
           version: 'latest' # default is latest stable
         id: install
       - name: Decrypt large secret
-      - uses: actions/checkout@v1
+        uses: actions/checkout@v1
         run: ./scripts/decrypt.sh
         env:
           DECRYPT_CONF: ${{ secrets.DECRYPT_CONF }} 
