@@ -40,7 +40,7 @@ jobs:
           kubeconfig: $HOME/secrets/admin.conf # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
         id: setcontext
       - name: Echo kubeconfig
-        run: echo $KUBECONFIG
+        run: cat $KUBECONFIG
       - name: Deploy to kubernetes
         uses: Azure/k8s-deploy@v1
         with:
