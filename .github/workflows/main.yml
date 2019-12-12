@@ -37,7 +37,7 @@ jobs:
       - name: set context
         uses: azure/k8s-set-context@v1
         with:
-          kubeconfig: home/runner/secrets/admin.conf # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
+          kubeconfig: ${{secrets.KUBE_CONF}} # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
         id: setcontext
       - name: Echo kubeconfig
         run: |
