@@ -44,8 +44,8 @@ jobs:
         uses: Azure/k8s-deploy@v1
         with:
          manifests: |
-          kubernetes/deployment.yaml
-          kubernetes/service.yaml
+          kubernetes/cc-frontend-deployment.yml
+          kubernetes/cc-frontend-service.yml
          images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:b19ecff94e8b1e30d885feb81a9ac4df28f4ca97'
          imagepullsecrets: |
            regcred
