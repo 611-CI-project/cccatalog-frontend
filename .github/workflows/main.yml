@@ -28,12 +28,14 @@ jobs:
         with:
           version: 'latest' # default is latest stable
         id: install
-      - name: Decrypt large secret
+      - name: Checkout repo
         uses: actions/checkout@v1
-      - name: run decrypt script
+      - name: Decrypt conf file
         run: ./scripts/decrypt.sh
         env:
           DECRYPT_CONF: ${{ secrets.DECRYPT_CONF }}
+      - name: Print file
+        run: cat $HOME/secrets/admin.conf
       - name: set context
         uses: azure/k8s-set-context@v1
         with:
