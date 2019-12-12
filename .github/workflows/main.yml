@@ -42,7 +42,7 @@ jobs:
       - name: Echo kubeconfig
         run: |
           cat $KUBECONFIG
-          cat $HOME
+          echo $HOME
       - name: Deploy to kubernetes
         uses: Azure/k8s-deploy@v1
         with:
