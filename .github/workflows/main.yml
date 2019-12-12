@@ -42,7 +42,7 @@ jobs:
          manifests: |
           kubernetes/cc-frontend-deployment.yml
           kubernetes/cc-frontend-service.yml
-         images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:b19ecff94e8b1e30d885feb81a9ac4df28f4ca97'
+         images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{github.sha}}'
          imagepullsecrets: |
            regcred
          kubectl-version: 'latest'
