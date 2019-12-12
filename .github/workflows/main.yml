@@ -33,5 +33,20 @@ jobs:
       - name: run decrypt script
         run: ./scripts/decrypt.sh
         env:
-          DECRYPT_CONF: ${{ secrets.DECRYPT_CONF }} 
-
+          DECRYPT_CONF: ${{ secrets.DECRYPT_CONF }}
+      - name: set context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: $HOME/secrets/admin.conf # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
+        id: setcontext
+      - name: Deploy to kubernetes
+        uses: Azure/k8s-deploy@v1
+        with:
+         manifests: |
+          kubernetes/deployment.yaml
+          kubernetes/service.yaml
+         images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:b19ecff94e8b1e30d885feb81a9ac4df28f4ca97'
+         imagepullsecrets: |
+           regcred
+         kubectl-version: 'latest'
