@@ -1,0 +1,27 @@
+
+#   CCcatalog Frontend
+#   Kubernetes Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cc-frontend-deployment
+  labels:
+    app: cc-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cc-frontend
+  template:
+    metadata:
+      labels:
+        app: cc-frontend
+    spec:
+      containers:
+      - name: cc-frontend
+        image: docker.pkg.github.com/andreasjohansson1990/cccatalog-frontend/cccatalog-frontend-web:0.1
+        command: ["npm"]
+        args: ["start"]
+        ports:
+        - containerPort: 8443
