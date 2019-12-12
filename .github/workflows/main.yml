@@ -39,7 +39,6 @@ jobs:
       - name: set context
         uses: azure/k8s-set-context@v1
         with:
-          method: kubeconfig
           kubeconfig: $HOME/secrets/admin.conf # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
         id: setcontext
       - name: Deploy to kubernetes
