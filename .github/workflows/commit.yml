@@ -5,11 +5,14 @@ jobs:
     name: Check source code linting
     runs-on: ubuntu-latest
     steps:
+      # Checkout code from source repository
       - uses: actions/checkout@v1
+      # Setup Node in the virtual machine
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+      # Install dependencies and run linting
       - run: npm install
       - run: npm run lint
   unit:
