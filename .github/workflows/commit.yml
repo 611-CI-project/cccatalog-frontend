@@ -15,15 +15,15 @@ jobs:
   unit:
     name: Run unit testing
     runs-on: ubuntu-latest
-    run: |
-      echo 'Unit testing is not yet implemented'
+    steps: 
+      - run: echo 'Unit testing is not yet implemented'
   coverage:
     name: Check code coverage of unit test
     runs-on: ubuntu-latest
-    run: |
-      echo 'Code coverage check is not yet implemented'
+    steps:
+      - run: echo 'Code coverage check is not yet implemented'
   build:
     name: Build source code
     runs-on: ubuntu-latest
-    run: |
-      echo 'Building source code is not yet implemented'
+    steps:
+      - run: echo 'Building source code is not yet implemented'
