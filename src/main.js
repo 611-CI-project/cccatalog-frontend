@@ -8,7 +8,7 @@ import store from './store';
 import GoogleAnalytics from './analytics/GoogleAnalytics';
 
 function createApp(router, __INITIAL_STATE__) {
-  Vue.config.productionTip = false
+  Vue.config.productionTip = false;
 
   ApiService.init();
   const analytics = GoogleAnalytics();
