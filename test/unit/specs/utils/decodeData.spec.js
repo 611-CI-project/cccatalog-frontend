@@ -4,7 +4,7 @@ describe('decodeData', () => {
   it('returns empty string for empty string', () => {
     const data = '';
 
-    expect(decodeData(data)).toEqual('');
+    expect(decodeData(data)).toEqual('invalid');
   });
 
   it('returns empty string for undefined data', () => {
