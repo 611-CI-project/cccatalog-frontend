@@ -5,14 +5,27 @@ jobs:
     name: Check source code linting
     runs-on: ubuntu-latest
     steps:
-      # Checkout code from source repository
-      - name: Checkout repository code
-        uses: actions/checkout@v1
       # Setup Node in the virtual machine
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+      # Checkout code from source repository
+      - name: Checkout repository code
+        uses: actions/checkout@v1
+      # Use or set cache for npm modules
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          # Path to npm files, ~/.npm` on Linux/macOS
+          path: ~/.npm
+          # Create a cache key with current OS and a SHA-256 hash of the package-lock.json file
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          # Sequentially search for any existing caches that matches the list of restore-keys
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       # Install dependencies and run linting
       - name: Install npm dependencies
         run: npm install
