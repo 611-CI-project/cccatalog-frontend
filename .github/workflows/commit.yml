@@ -44,7 +44,12 @@ jobs:
       - name: Install npm dependencies
         run: npm install
       - name: Run unit testing 
-        run: npm test
+        run: CI=true npm test  >> ./coverage/code_coverage
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage
+          path: coverage
       # TODO: - name: Upload test report artifact
   coverage:
     name: Check code coverage of unit test
@@ -70,3 +75,5 @@ jobs:
         with:
           name: dist
           path: dist
+
+# CI=true npm test | awk '/All/ { n = 50; if($4 < n && $6 < n && $8 < n && $10 < n) exit 1; else {print "OK"}}'
