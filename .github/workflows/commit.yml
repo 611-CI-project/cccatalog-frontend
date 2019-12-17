@@ -17,7 +17,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v1
         with:
-          # Path to npm files, ~/.npm` on Linux/macOS
+          # Path to npm files, default ~/.npm` on Linux/macOS
           path: ~/.npm
           # Create a cache key with current OS and a SHA-256 hash of the package-lock.json file
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
