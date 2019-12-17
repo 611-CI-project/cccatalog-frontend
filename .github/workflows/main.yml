@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   docker_build_job:
@@ -24,7 +27,7 @@ jobs:
       runs-on: ubuntu-latest
       name: Deploy to kubernetes
       steps:
-      - name: install kubectl
+      - name: Setup kubectl
         uses: azure/setup-kubectl@v1
         with:
           version: 'latest' # default is latest stable
