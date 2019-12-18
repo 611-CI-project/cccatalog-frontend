@@ -3,6 +3,7 @@ on: [push]
 jobs:
   lint:
     name: Check source code linting
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       # Setup Node in the virtual machine
@@ -33,6 +34,7 @@ jobs:
         run: npm run lint
   unit:
     name: Run unit testing
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout repository code
@@ -70,7 +72,9 @@ jobs:
       - name: Build application for production
         run: npm run build
       - name: Move distribution Dockerfile to distribution directory
-        run: sudo cp dist.Dockerfile /dist
+        run: |
+          sudo cp dist.Dockerfile /dist
+          ls dist
       - name: Upload build artifacts
         uses: actions/upload-artifact@v1
         with:
@@ -78,6 +82,7 @@ jobs:
           path: dist
   publish:
     name: Publish distribution image
+    if: github.event_name == 'pull_request'
     needs: [build]
     runs-on: ubuntu-latest
     steps:
