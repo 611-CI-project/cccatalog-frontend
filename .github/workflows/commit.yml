@@ -97,7 +97,6 @@ jobs:
           name: dist
           path: dist
   publish:
-    if: github.event_name == 'pull_request' 
     name: Publish distribution image
     needs: [build]
     runs-on: ubuntu-latest
