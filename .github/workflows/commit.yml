@@ -69,7 +69,7 @@ jobs:
         with:
           name: coverage
       - name: Check coverage values
-        run: CI=true npm test | awk '/All/ { n = 50; if($4 < n && $6 < n && $8 < n && $10 < n) exit 1; else {print "OK"}}' coverage/code_coverage
+        run: awk '/All/ { n = 50; if($4 < n && $6 < n && $8 < n && $10 < n) exit 1; else {print "OK"}}' coverage/code_coverage
   build:
     name: Build & upload source code
     runs-on: ubuntu-latest
