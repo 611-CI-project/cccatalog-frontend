@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v1
       # Use or set cache for npm modules
-      - name: Cache node modules
+      - name: Cache or retrieve node modules
         uses: actions/cache@v1
         with:
           # Path to npm modules
@@ -28,11 +28,10 @@ jobs:
             cache-${{ runner.os }}-
       # Install dependencies and run linting
       - name: Install npm dependencies
-        run: npm install
+        run: npm ci
       - name: Run source code linting
         run: npm run lint
   unit:
-    if: github.event_name == 'pull_request'
     name: Run unit testing
     runs-on: ubuntu-latest
     steps: 
@@ -42,8 +41,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+      - name: Cache or retrieve node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: cache-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cache-${{ runner.os }}-build-${{ env.cache-name }}-
+            cache-${{ runner.os }}-build-
+            cache-${{ runner.os }}-
       - name: Install npm dependencies
-        run: npm install
+        run: npm ci
       - name: Run unit testing 
         run: CI=true npm test  >> ./coverage/code_coverage
       - name: Upload build artifacts
@@ -68,8 +76,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+      - name: Cache or retrieve node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: cache-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cache-${{ runner.os }}-build-${{ env.cache-name }}-
+            cache-${{ runner.os }}-build-
+            cache-${{ runner.os }}-
       - name: Install npm dependencies
-        run: npm install
+        run: npm ci
       - name: Build application for production
         run: npm run build
       - name: Move distribution files to dist/ directory
