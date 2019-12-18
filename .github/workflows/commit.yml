@@ -33,6 +33,7 @@ jobs:
         run: npm run lint
   unit:
     name: Run unit testing
+    id: unit_testing
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout repository code
@@ -60,7 +61,7 @@ jobs:
           name: coverage
           path: coverage
   coverage:
-    needs: [Run unit testing]
+    needs: [unit-testing]
     name: Check code coverage of unit test
     runs-on: ubuntu-latest
     steps:
