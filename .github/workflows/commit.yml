@@ -60,13 +60,11 @@ jobs:
           name: coverage
           path: coverage
   coverage:
-    if: github.event_name == 'pull_request'
     name: Check code coverage of unit test
     runs-on: ubuntu-latest
     steps:
       - run: echo 'Code coverage check is not yet implemented'
   build:
-    if: github.event_name == 'pull_request'
     name: Build & upload source code
     runs-on: ubuntu-latest
     steps:
