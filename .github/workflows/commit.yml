@@ -32,6 +32,7 @@ jobs:
       - name: Run source code linting
         run: npm run lint
   unit:
+    if: github.event_name == 'pull_request'
     name: Run unit testing
     runs-on: ubuntu-latest
     steps: 
@@ -51,11 +52,13 @@ jobs:
           name: coverage
           path: coverage
   coverage:
+    if: github.event_name == 'pull_request'
     name: Check code coverage of unit test
     runs-on: ubuntu-latest
     steps:
       - run: echo 'Code coverage check is not yet implemented'
   build:
+    if: github.event_name == 'pull_request'
     name: Build & upload source code
     runs-on: ubuntu-latest
     steps:
@@ -79,6 +82,7 @@ jobs:
           name: dist
           path: dist
   publish:
+    if: github.event_name == 'pull_request'
     name: Publish distribution image
     needs: [build]
     runs-on: ubuntu-latest
