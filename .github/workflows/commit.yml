@@ -70,7 +70,7 @@ jobs:
       - name: Build application for production
         run: npm run build
       - name: Move distribution Dockerfile to distribution directory
-        run: cp dist.Dockerfile /dist
+        run: sudo cp dist.Dockerfile /dist
       - name: Upload build artifacts
         uses: actions/upload-artifact@v1
         with:
