@@ -56,7 +56,7 @@ jobs:
     steps:
       - run: echo 'Code coverage check is not yet implemented'
   build:
-    name: Build source code
+    name: Build & upload source code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository code
@@ -76,6 +76,7 @@ jobs:
           path: dist
   publish:
     name: Publish distribution image
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Download built source code
@@ -89,12 +90,10 @@ jobs:
           username: ${{ secrets.GITHUB_USERNAME }}
           password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
       - name: Build distribution image
-        run: |
-          docker build . -f dist.Dockerfile -t ${{ github.sha }}
-          docker tag cccatalog-dist docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
-          docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
+        run: docker build . -f dist.Dockerfile -t ${{ github.sha }}
       - name: Tag distribution image
         run: docker tag ${{ github.sha }} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
-
+      - name: Push distribution image
+        run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
 
 # CI=true npm test | awk '/All/ { n = 50; if($4 < n && $6 < n && $8 < n && $10 < n) exit 1; else {print "OK"}}'
