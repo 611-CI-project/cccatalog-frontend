@@ -69,6 +69,8 @@ jobs:
         run: npm install
       - name: Build application for production
         run: npm run build
+      - name: Move distribution Dockerfile to distribution directory
+        run: mv dist.Dockerfile /dist
       - name: Upload build artifacts
         uses: actions/upload-artifact@v1
         with:
@@ -90,7 +92,7 @@ jobs:
           username: ${{ secrets.GITHUB_USERNAME }}
           password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
       - name: Build distribution image
-        run: docker build . -f dist.Dockerfile -t ${{ github.sha }}
+        run: docker build ./dist -f dist.Dockerfile -t ${{ github.sha }}
       - name: Tag distribution image
         run: docker tag ${{ github.sha }} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
       - name: Push distribution image
