@@ -50,7 +50,6 @@ jobs:
         with:
           name: coverage
           path: coverage
-      # TODO: - name: Upload test report artifact
   coverage:
     name: Check code coverage of unit test
     runs-on: ubuntu-latest
@@ -75,5 +74,27 @@ jobs:
         with:
           name: dist
           path: dist
+  publish:
+    name: Publish distribution image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built source code
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+      - name: Login to docker
+        uses: azure/docker-login@v1
+        with:
+          login-server: docker.pkg.github.com
+          username: ${{ secrets.GITHUB_USERNAME }}
+          password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+      - name: Build distribution image
+        run: |
+          docker build . -f dist.Dockerfile -t ${{ github.sha }}
+          docker tag cccatalog-dist docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
+          docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
+      - name: Tag distribution image
+        run: docker tag ${{ github.sha }} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
+
 
 # CI=true npm test | awk '/All/ { n = 50; if($4 < n && $6 < n && $8 < n && $10 < n) exit 1; else {print "OK"}}'
