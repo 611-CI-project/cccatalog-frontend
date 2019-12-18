@@ -20,7 +20,7 @@ jobs:
           # Path to npm modules
           path: node_modules
           # Create a cache key with current OS and a SHA-256 hash of the package-lock.json file
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: cache-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           # Sequentially search for any existing caches that matches the list of restore-keys
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -82,7 +82,7 @@ jobs:
           name: dist
           path: dist
   publish:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' 
     name: Publish distribution image
     needs: [build]
     runs-on: ubuntu-latest
