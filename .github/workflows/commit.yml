@@ -23,9 +23,9 @@ jobs:
           key: cache-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           # Sequentially search for any existing caches that matches the list of restore-keys
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            cache-${{ runner.os }}-build-${{ env.cache-name }}-
+            cache-${{ runner.os }}-build-
+            cache-${{ runner.os }}-
       # Install dependencies and run linting
       - name: Install npm dependencies
         run: npm install
