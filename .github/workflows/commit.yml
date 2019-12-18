@@ -70,7 +70,6 @@ jobs:
           name: coverage
       - name: verify access
         run: cat coverage
-- run: cat my-artifact'
   build:
     name: Build & upload source code
     runs-on: ubuntu-latest
