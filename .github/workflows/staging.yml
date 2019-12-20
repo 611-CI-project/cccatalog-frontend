@@ -2,7 +2,7 @@
 #   Staging pipeline
 #   611-CI-project/cccatalog-frontend
 
-name: /staging
+name: staging
 on: 
   pull_request:
     branches:
