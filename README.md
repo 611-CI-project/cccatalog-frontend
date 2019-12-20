@@ -8,7 +8,7 @@
 
 ![](https://github.com/611-CI-project/cccatalog-frontend/workflows/development/badge.svg?branch=development)
 
-![](https://github.com/611-CI-project/cccatalog-frontend/workflows/feature/badge.svg)
+![](https://github.com/611-CI-project/cccatalog-frontend/workflows/feature/<branch>/badge.svg)
 
 </p>
 
