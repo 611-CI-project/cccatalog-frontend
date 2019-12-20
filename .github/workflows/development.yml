@@ -1,36 +1,41 @@
-on: [push]
+
+#   Development pipeline
+#   611-CI-project/cccatalog-frontend
+
+name: development
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
 
 jobs:
   lint:
     name: Check source code linting
     runs-on: ubuntu-latest
     steps:
-      # Setup Node in the virtual machine
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
-      # Checkout code from source repository
+          node-version: '12.14.0'
       - name: Checkout repository code
         uses: actions/checkout@v1
-      # Use or set cache for npm modules
       - name: Cache or retrieve node modules
         uses: actions/cache@v1
         with:
-          # Path to npm modules
           path: node_modules
-          # Create a cache key with current OS and a SHA-256 hash of the package-lock.json file
           key: cache-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          # Sequentially search for any existing caches that matches the list of restore-keys
           restore-keys: |
             cache-${{ runner.os }}-build-${{ env.cache-name }}-
             cache-${{ runner.os }}-build-
             cache-${{ runner.os }}-
-      # Install dependencies and run linting
       - name: Install npm dependencies
         run: npm ci
       - name: Run source code linting
         run: npm run lint
+
   unit:
     name: Run unit testing
     runs-on: ubuntu-latest
@@ -40,7 +45,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.14.0'
       - name: Cache or retrieve node modules
         uses: actions/cache@v1
         with:
@@ -59,6 +64,7 @@ jobs:
         with:
           name: coverage
           path: coverage
+
   coverage:
     needs: [unit]
     name: Check code coverage of unit test
@@ -70,6 +76,7 @@ jobs:
           name: coverage
       - name: Check coverage values
         run: awk '/All/ { n = 50; if($4 < n && $6 < n && $8 < n && $10 < n) exit 1; else {print "OK"}}' coverage/code_coverage
+  
   build:
     name: Build & upload source code
     runs-on: ubuntu-latest
@@ -79,7 +86,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.14.0'
       - name: Cache or retrieve node modules
         uses: actions/cache@v1
         with:
@@ -102,7 +109,8 @@ jobs:
         with:
           name: dist
           path: dist
-  publish:
+
+  publish_distribution:
     name: Publish distribution image
     needs: [build]
     runs-on: ubuntu-latest
@@ -122,6 +130,43 @@ jobs:
       - name: Tag distribution image
         run: docker tag ${{ github.sha }} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
       - name: Push distribution image
-        run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
+        run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha 
 
-# CI=true npm test | awk '/All/ { n = 50; if($4 < n && $6 < n && $8 < n && $10 < n) exit 1; else {print "OK"}}'
+  publish_development:
+    runs-on: ubuntu-latest
+    name: Build and publish development image
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Docker login
+      uses: azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: ${{ secrets.GITHUB_USERNAME }}
+        password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+    - run: |
+        docker build . -t docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
+        docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
+
+  kubernetes:
+      needs: [publish_development]
+      runs-on: ubuntu-latest
+      name: Deploy to development kubernetes cluster
+      steps:
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v1
+      - name: Checkout repo
+        uses: actions/checkout@v1
+      - name: Set context to devlopment cluster
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{secrets.KUBE_CONF}}
+        id: setcontext
+      - name: Deploy to devlopment cluster
+        uses: Azure/k8s-deploy@v1
+        with:
+          manifests: |
+            kubernetes/cc-frontend-deployment.yml
+            kubernetes/cc-frontend-service.yml
+          images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{github.sha}}'
+          imagepullsecrets: regcred

@@ -1,0 +1,17 @@
+
+#   Production pipeline
+#   611-CI-project/cccatalog-frontend
+
+name: production
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish to production
+    steps:
+    - name: Deploy production image to production environment #special tagging, latest release?
+      run: echo 'Not yet implemented'
