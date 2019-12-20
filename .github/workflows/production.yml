@@ -2,7 +2,7 @@
 #   Production pipeline
 #   611-CI-project/cccatalog-frontend
 
-name: production branch workflow
+name: 'Production branch: pull request'
 on:
   pull_request:
     branches:
