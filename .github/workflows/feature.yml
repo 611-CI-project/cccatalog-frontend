@@ -2,7 +2,7 @@
 #   Feature pipeline
 #   611-CI-project/cccatalog-frontend
 
-name: Feature branch pipeline
+name: feature branch workflow
 on:
   push:
     branches:
