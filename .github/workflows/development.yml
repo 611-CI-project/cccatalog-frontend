@@ -2,7 +2,7 @@
 #   Development pipeline
 #   611-CI-project/cccatalog-frontend
 
-name: 'Development branch: push/pull request'
+name: Development branch
 on:
   push:
     branches:
