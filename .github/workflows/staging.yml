@@ -9,7 +9,10 @@ on:
       - staging
 
 jobs:
-  - name: Get production image
-    run: echo 'Not yet implemented'
-  - name: Deploy image to staging environment
-    run: echo 'Not yet implemented'
+  publish:
+    runs-on: ubuntu-latest
+    name: Deploy to staging
+    - name: Get production image
+      run: echo 'Not yet implemented'
+    - name: Deploy image to staging environment
+      run: echo 'Not yet implemented'
