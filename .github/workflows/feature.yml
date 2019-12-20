@@ -9,8 +9,6 @@ on:
       - 'feature/*'
 
 jobs:
-  author:
-    name: ${{ github.actor }}
   lint:
     name: Check source code linting
     runs-on: ubuntu-latest
