@@ -130,7 +130,7 @@ jobs:
       - name: Tag distribution image
         run: docker tag ${{ github.sha }} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
       - name: Push distribution image
-        run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha 
+        run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
 
   publish_development:
     runs-on: ubuntu-latest
