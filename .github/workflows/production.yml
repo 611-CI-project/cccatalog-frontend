@@ -9,5 +9,8 @@ on:
       - master
 
 jobs:
-  - name: Deploy production image to production environment #special tagging, latest release?
-    run: echo 'Not yet implemented'
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish to production
+    - name: Deploy production image to production environment #special tagging, latest release?
+      run: echo 'Not yet implemented'
