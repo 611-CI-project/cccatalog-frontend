@@ -2,18 +2,13 @@
 #   Feature pipeline
 #   611-CI-project/cccatalog-frontend
 
-name: Feature branch pipeline
+name: ${{ env }}
 on:
   push:
     branches:
       - 'feature/*'
 
 jobs:
-  author:
-    name: Branch and author
-    - runs: |
-      echo 'Branch: ${{ github.ref }}'
-      echo 'Author: ${{ github.actor }}'
   lint:
     name: Check source code linting
     runs-on: ubuntu-latest
