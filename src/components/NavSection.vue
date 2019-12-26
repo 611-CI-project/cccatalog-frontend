@@ -6,7 +6,7 @@
     <input class="menu-btn" type="checkbox" id="menu-btn" />
     <label class="menu_icon" for="menu-btn"><span class="navicon"></span></label>
     <ul class="menu">
-      <li><a href="/about">About me</a></li>
+      <li><a href="/about">About</a></li>
       <li><a href="/collections">Browse by Collection</a></li>
       <li id="search-help"><a href="/search-help">Search Guide</a></li>
       <li><a href="/feedback">Feedback</a></li>
