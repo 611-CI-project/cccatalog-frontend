@@ -2,7 +2,7 @@
 <div class="page grid-container full">
   <header-section showNavSearch="true"></header-section>
   <div class="page_body">
-    <h1>About CC Search for new changes</h1>
+    <h1>About CC Search</h1>
       <p class="page_lead-paragraph">
         CC Search is a tool that allows openly licensed and public domain works to be discovered
         and used by everyone. Creative Commons, the nonprofit behind CC Search, is the maker of the
