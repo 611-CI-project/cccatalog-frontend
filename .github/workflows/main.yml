@@ -10,7 +10,9 @@ jobs:
     steps:
     # Checkout code from repository to virtual machine
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
+      with:
+        ref: exploratory_manual_rollback
     # Login to GitHub's Docker image repository
     - name: Docker login
       uses: azure/docker-login@v1
