@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: cc-frontend
-        image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:9d291b001f1efce6b7292f407aa88247f7c4628d
+        image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog
         command: ["npm"]
         args: ["start"]
         ports:
