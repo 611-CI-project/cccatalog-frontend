@@ -1,8 +1,16 @@
 # cccatalog-frontend
 
-![](https://github.com/611-CI-project/cccatalog-frontend/workflows/.github/workflows/main.yml/badge.svg)
+<p align="center">
 
-![](https://github.com/611-CI-project/cccatalog-frontend/workflows/.github/workflows/commit.yml/badge.svg)
+![](https://github.com/611-CI-project/cccatalog-frontend/workflows/production/badge.svg?branch=master)
+
+![](https://github.com/611-CI-project/cccatalog-frontend/workflows/staging/badge.svg?branch=staging)
+
+![](https://github.com/611-CI-project/cccatalog-frontend/workflows/development/badge.svg?branch=development)
+
+![](https://github.com/611-CI-project/cccatalog-frontend/workflows/feature/<branch>/badge.svg)
+
+</p>
 
 ## About
 
