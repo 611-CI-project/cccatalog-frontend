@@ -138,12 +138,12 @@ jobs:
         uses: azure/setup-kubectl@v1
       - name: Checkout repo
         uses: actions/checkout@v1
-      - name: Set context to devlopment cluster
+      - name: Set context to staging cluster
         uses: azure/k8s-set-context@v1
         with:
           kubeconfig: ${{secrets.KUBE_CONF}}
         id: setcontext
-      - name: Deploy to devlopment cluster
+      - name: Deploy to staging cluster
         uses: Azure/k8s-deploy@v1
         with:
           manifests: |
