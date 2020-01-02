@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    build: .
+    image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:c43cade4e3de0efe41f45c37ab5893fd07945cd4
     command: npm run dev
     volumes:
       - .:/usr/app/
