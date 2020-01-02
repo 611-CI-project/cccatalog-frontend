@@ -4,7 +4,7 @@
 
 name: pull request 
 on:
-  pull_request:
+  #pull_request:
     branches:
       - master
 
@@ -129,3 +129,25 @@ jobs:
       - name: Push distribution image
         run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
 
+  kubernetes:
+      needs: [publish_distribution]
+      runs-on: ubuntu-latest
+      name: Deploy to staging kubernetes cluster
+      steps:
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v1
+      - name: Checkout repo
+        uses: actions/checkout@v1
+      - name: Set context to staging cluster
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{secrets.KUBE_CONF}}
+        id: setcontext
+      - name: Deploy to staging cluster
+        uses: Azure/k8s-deploy@v1
+        with:
+          manifests: |
+            kubernetes/cc-frontend-deployment.yml
+            kubernetes/cc-frontend-service.yml
+          images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}'
+          imagepullsecrets: regcred
