@@ -129,7 +129,7 @@ jobs:
       - name: Push distribution image
         run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
 
-  kubernetes:
+  #kubernetes:
       needs: [publish_distribution]
       runs-on: ubuntu-latest
       name: Deploy to staging kubernetes cluster
