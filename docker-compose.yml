@@ -1,6 +1,6 @@
 version: '3'
 services:
   web:
-    image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:32d71deb5870b3e25c0a0955cdfd41573a24b2e2
+    image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:5126e2a3a9a338f7c051b2c5d869d3c32ffed886
     ports:
       - "8443:8443"
