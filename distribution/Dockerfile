@@ -2,9 +2,8 @@ FROM nginx:latest
 
 RUN mkdir /app
 
-COPY . /var/www
+#COPY . /var/www
 
-COPY nginx.conf /etc/nginx/nginx.conf
-WORKDIR /app
+#COPY nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx -g 'daemon off;'"]
