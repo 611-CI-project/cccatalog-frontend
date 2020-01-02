@@ -2,14 +2,12 @@
 #   Development pipeline
 #   611-CI-project/cccatalog-frontend
 
-name: development
+name: pull request 
 on:
-  push:
-    branches:
-      - development
   pull_request:
     branches:
-      - development
+      - 'feature/*'
+    types: [open, edited, reopen]
 
 jobs:
   lint:
@@ -132,26 +130,10 @@ jobs:
       - name: Push distribution image
         run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{ github.sha }}
 
-  publish_development:
-    runs-on: ubuntu-latest
-    name: Build and publish development image
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Docker login
-      uses: azure/docker-login@v1
-      with:
-        login-server: docker.pkg.github.com
-        username: ${{ secrets.GITHUB_USERNAME }}
-        password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
-    - run: |
-        docker build . -t docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
-        docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
-
   kubernetes:
-      needs: [publish_development]
+      needs: [publish_distribution]
       runs-on: ubuntu-latest
-      name: Deploy to development kubernetes cluster
+      name: Deploy to staging kubernetes cluster
       steps:
       - name: Setup kubectl
         uses: azure/setup-kubectl@v1
@@ -168,5 +150,5 @@ jobs:
           manifests: |
             kubernetes/cc-frontend-deployment.yml
             kubernetes/cc-frontend-service.yml
-          images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{github.sha}}'
+          images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:${{github.sha}}'
           imagepullsecrets: regcred
