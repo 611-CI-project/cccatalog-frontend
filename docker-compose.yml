@@ -1,10 +1,7 @@
 version: '3'
 services:
   web:
-    image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:2fe55553b06ff44ab64429b7ac3b3ec0ea8769a1
-    command: 
-    volumes:
-      - .:/usr/app/
-      - /usr/app/node_modules
+    image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:391caf177f892e319cf033e5741021471dde140f
+    command: ls
     ports:
       - "8443:8443"
