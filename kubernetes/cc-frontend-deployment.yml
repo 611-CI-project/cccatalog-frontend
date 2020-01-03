@@ -24,4 +24,4 @@ spec:
         #command: ["npm"]
         #args: ["start"]
         ports:
-        - containerPort: 8443
+        - containerPort: 443
