@@ -1,6 +1,10 @@
 version: '3'
 services:
   web:
-    image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog-dist:f9d3442eb50e96e9e06d8d6f6f34442625f60aac
+    image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:c43cade4e3de0efe41f45c37ab5893fd07945cd4
+    command: npm run dev
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
     ports:
       - "8443:443"
