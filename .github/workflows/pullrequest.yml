@@ -168,5 +168,5 @@ jobs:
           manifests: |
             kubernetes/cc-frontend-deployment.yml
             kubernetes/cc-frontend-service.yml
-          images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog'
+          images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha}}'
           imagepullsecrets: regcred
