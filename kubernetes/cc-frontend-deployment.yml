@@ -25,6 +25,4 @@ spec:
         args: ["start"]
         ports:
         - containerPort: 8443
-      imagePullSecrets:
-        - name: regcred
 
