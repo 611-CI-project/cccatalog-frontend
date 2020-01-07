@@ -1,0 +1,20 @@
+
+
+#   Release pipeline
+#   611-CI-project/cccatalog-frontend
+
+name: Release from feature branch
+on:
+  issue_comment:
+    types: [created]
+    branches:
+      - 'feature/*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: contains(github.event.comment.body, '/release')
+    name: check if triggered
+    steps: 
+      - name: Controll point
+        run: echo '${{github.sha}}'
