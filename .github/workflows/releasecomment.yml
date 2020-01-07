@@ -1,5 +1,3 @@
-
-
 #   Release pipeline
 #   611-CI-project/cccatalog-frontend
 
@@ -17,4 +15,4 @@ jobs:
     name: check if triggered
     steps: 
       - name: Controll point
-        run: echo '${{github.sha}}'
+        run: echo 'ref ${{github.ref}}'
