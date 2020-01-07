@@ -17,4 +17,4 @@ jobs:
     name: check if triggered
     steps: 
       - name: Controll point
-        run: echo 'it works'
+        run: echo '${{github.sha}}'
