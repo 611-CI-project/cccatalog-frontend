@@ -15,4 +15,5 @@ jobs:
     name: Find right image
     steps:
     - name: Check if image is in the release asset list #special tagging, latest release?
-      run: echo 'ref ${{github.ref}}
+      run: echo 'ref ${{github.sha}}'
+    - name: grab image from asset list
