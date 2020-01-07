@@ -16,5 +16,7 @@ jobs:
     if: contains(github.event.comment.body, '/release')
     name: check if triggered
     steps: 
-      - name: Controll point
-        run: echo 'ref ${{github.ref}}'
+    - name: Dump github context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
