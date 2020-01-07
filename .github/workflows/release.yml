@@ -5,16 +5,16 @@
 
 name: Release from feature branch
 on:
-  release:
+  commit_comment:
+    types: [created]
     branches:
       - 'feature/*'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    name: Find right image
-    steps:
-    - name: Check if image is in the release asset list #special tagging, latest release?
-      run: echo 'ref ${{github.sha}}'
-    - name: grab image from asset list
-      run: echo 'not yet implemented'
+    if: contains(github.event.comment.body, '/release')
+    name: check if triggered
+    steps: 
+      - name: Controll point
+        run: echo 'it works'
