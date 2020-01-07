@@ -5,7 +5,7 @@
 
 name: Release from feature branch
 on:
-  pull_request:
+  release:
     branches:
       - 'feature/*'
 
@@ -15,4 +15,4 @@ jobs:
     name: Find right image
     steps:
     - name: Check if image is in the release asset list #special tagging, latest release?
-      run: echo 'Not yet implemented'
+      run: echo 'ref ${{github.ref}}
