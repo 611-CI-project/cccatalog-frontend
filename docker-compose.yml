@@ -2,9 +2,6 @@ version: '3'
 services:
   web:
     build: .
-    command: npm run dev
-    volumes:
-      - .:/usr/app/
-      - /usr/app/node_modules
+    commands: npm start
     ports:
       - "8443:8443"
