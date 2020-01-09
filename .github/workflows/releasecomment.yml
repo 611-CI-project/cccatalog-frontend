@@ -4,11 +4,11 @@
 #   611-CI-project/cccatalog-frontend
 
 name: Release from feature branch
-on:
-  issue_comment:
-    types: [created, edited]
-    branches:
-      - 'feature/*'
+#on:
+#  issue_comment:
+#    types: [created, edited]
+#    branches:
+#      - 'feature/*'
 
 jobs:
   publish_production_image:
@@ -37,10 +37,8 @@ jobs:
     - name: Set context for production cluster
       uses: azure/k8s-set-context@v1
       with:
-        kubeconfig: ${{secrets.KUBE_CONF_TEST}}
+        kubeconfig: ${{secrets.KUBE_CONF2}}
       id: setcontext
-    - name: check contexts
-      run: kubectl config get-contexts
     - name: Checkout repo
       uses: actions/checkout@v1
     - name: Deploy to sproduction cluster
@@ -49,5 +47,5 @@ jobs:
         manifests: |
           kubernetes/cc-frontend-deployment.yml
           kubernetes/cc-frontend-service.yml
-        images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ env.TAG }}'
+        images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ env.VERSION }}'
         imagepullsecrets: registrycred
