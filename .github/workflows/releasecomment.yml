@@ -38,7 +38,6 @@ jobs:
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{secrets.KUBE_CONF_TEST}}
-        context: prod
       id: setcontext
     - name: check contexts
       run: kubectl get-contexts
