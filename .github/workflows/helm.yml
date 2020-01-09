@@ -16,6 +16,8 @@ jobs:
         echo ::set-env name=VERSION::$version
         tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
         echo ::set-env name=TAG::$tag
+    - name: Updating Helm
+      run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
     - name: Packaging Helm chart
       run: |
         helm package helm --set version=${{ env.VERSION }} --app-version=${{ env.VERSION }}
