@@ -19,9 +19,13 @@ jobs:
     - name: Set release value
       run: |
         version=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
-        echo ::set-env name=action_state:: $version
-    - name: print variable value
-      run: echo $action_state
+        echo ::set-env name=VERSION:: $version
+        tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
+        echo ::set-env name=TAG:: $tag
+    - name: print VERSION value
+      run: echo $VERSION
+    - name: print TAG value
+      run: echo $TAG
 
 
 
