@@ -21,8 +21,8 @@ jobs:
     - name: Check variable
       run: echo $TAG
       env:
-        VERSION: $(echo "${{github.event.comment.body}}" | awk '{print $2}')
-        TAG: $(echo "${{github.event.comment.body}}" | awk '{print $4}')
+        VERSION: echo "${{github.event.comment.body}}" | awk '{print $1}'
+        TAG: echo "${{github.event.comment.body}}" | awk '{print $4}'
 
 
 
