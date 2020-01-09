@@ -37,8 +37,7 @@ jobs:
     - name: Set context for production cluster
       uses: azure/k8s-set-context@v1
       with:
-        kubeconfig: ${{secrets.KUBE_CONF_TEST}}
-        context: "prod"
+        kubeconfig: ${{secrets.KUBE_CONF2}}
       id: setcontext
     - name: Checkout repo
       uses: actions/checkout@v1
