@@ -16,7 +16,11 @@ jobs:
     if: contains(github.event.comment.body, '/release')
     name: check if triggered
     steps: 
-    - name: Check for comment value
-      run: echo "${{github.event.comment.body}}" | awk '{print $2, $4}'
+    - name: Set version value and image tag
+      run: echo "${{github.event.comment.body}}"
+      env:
+        VERSION: $(echo "${{github.event.comment.body}}" | awk '{print $2}')
+    - name: Check variable
+      run: echo $VERSION
 
 
