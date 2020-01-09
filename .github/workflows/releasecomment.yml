@@ -17,10 +17,10 @@ jobs:
     name: check if triggered
     steps: 
     - name: Set version value and image tag
-      run: echo "${{github.event.comment.body}}"
+      run: echo $VERSION
       env:
         VERSION: $(echo "${{github.event.comment.body}}" | awk '{print $2}')
     - name: Check variable
-      run: echo ${{ VERSION }}
+      run: echo ${{ $VERSION }}
 
 
