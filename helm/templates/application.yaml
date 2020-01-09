@@ -16,7 +16,9 @@ spec:
     spec:
       containers:
       - name: cc-frontend
-        image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${VERSION}
+        # helm upgrade myrelease repo/foo  --set=version=1.2.2
+        # helm package --app-version=
+        image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:{{ .Values.version }}
         command: ["npm"]
         args: ["start"]
         ports:
