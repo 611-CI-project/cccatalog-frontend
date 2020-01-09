@@ -40,7 +40,7 @@ jobs:
         kubeconfig: ${{secrets.KUBE_CONF_TEST}}
       id: setcontext
     - name: check contexts
-      run: kubectl get-contexts
+      run: kubectl config get-contexts
     - name: Checkout repo
       uses: actions/checkout@v1
     - name: Deploy to sproduction cluster
