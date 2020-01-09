@@ -49,9 +49,3 @@ jobs:
           kubernetes/cc-frontend-service.yml
         images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ env.VERSION }}'
         imagepullsecrets: registrycred
-    
-
-
-
-
-

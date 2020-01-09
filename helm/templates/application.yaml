@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "helm.fullname" . }}-deployment
+  labels:
+    app: {{ template "helm.fullname" . }}-cc-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "helm.fullname" . }}-cc-frontend
+  template:
+    metadata:
+      labels:
+        app: {{ template "helm.fullname" . }}-cc-frontend
+    spec:
+      containers:
+      - name: cc-frontend
+        # helm upgrade myrelease repo/foo  --set=version=1.2.2
+        # helm package --app-version=
+        image: docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:{{ .Values.version }}
+        command: ["npm"]
+        args: ["start"]
+        ports:
+        - containerPort: 8443
+      imagePullSecrets:
+        - name: regcred
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "helm.fullname" . }}-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ template "helm.fullname" . }}-cc-frontend
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 8443
