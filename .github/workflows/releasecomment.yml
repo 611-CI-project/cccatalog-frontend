@@ -33,14 +33,7 @@ jobs:
     - name: Retag docker image
       run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
     - name: push production image 
-      run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
-  
-  
-  kubernetes:
-    needs: [publish_production_image]
-    runs-on: ubuntu-latest
-    name: Deploy to staging kubernetes cluster
-    steps:
+      run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION
     - name: Set context to staging cluster
       uses: azure/k8s-set-context@v1
       with:
@@ -52,7 +45,7 @@ jobs:
         manifests: |
           kubernetes/cc-frontend-deployment.yml
           kubernetes/cc-frontend-service.yml
-        images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ publish_production_image.env.TAG }}'
+        images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ env.TAG }}'
         imagepullsecrets: regcred
     
 
