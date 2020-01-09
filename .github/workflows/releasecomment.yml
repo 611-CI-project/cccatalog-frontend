@@ -14,9 +14,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     if: contains(github.event.comment.body, '/release')
-    name: check if triggered
+    name: Get values for version and tag
     steps: 
-    - name: Set release value
+    - name: Set release version and image tag 
       run: |
         version=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
         echo ::set-env name=VERSION:: $version
