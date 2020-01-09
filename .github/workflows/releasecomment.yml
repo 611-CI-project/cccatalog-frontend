@@ -37,7 +37,7 @@ jobs:
     - name: Set context to staging cluster
       uses: azure/k8s-set-context@v1
       with:
-        kubeconfig: ${{secrets.KUBE_CONF}}
+        kubeconfig: ${{secrets.KUBE_CONF2}}
       id: setcontext
     - name: Checkout repo
       uses: actions/checkout@v1
