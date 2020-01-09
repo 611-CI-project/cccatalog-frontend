@@ -4,17 +4,48 @@
 #   611-CI-project/cccatalog-frontend
 
 name: Release from feature branch
-on:
-  issue_comment:
-    types: [created, edited]
-    branches:
-      - 'feature/*'
+#on:
+#  issue_comment:
+#    types: [created, edited]
+#    branches:
+#      - 'feature/*'
 
 jobs:
-  publish:
+  publish_production_image:
     runs-on: ubuntu-latest
     if: contains(github.event.comment.body, '/release')
-    name: check if triggered
+    name: Get values for version and tag
     steps: 
-    - name: Check for comment value
-      run: echo "${{github.event.comment.body}}" | grep -oP '[^\/release ].*[\d]$'
+    - name: Set release version and image tag 
+      run: |
+        version=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
+        echo ::set-env name=VERSION::$version
+        tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
+        echo ::set-env name=TAG::$tag
+    - name: Login to Docker
+      uses: azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: ${{ secrets.GITHUB_USERNAME }}
+        password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+    - name: Pull image from registry
+      run: docker pull docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}}
+    - name: Retag docker image
+      run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
+    - name: push production image 
+      run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
+    - name: Set context for production cluster
+      uses: azure/k8s-set-context@v1
+      with:
+        kubeconfig: ${{secrets.KUBE_CONF2}}
+      id: setcontext
+    - name: Checkout repo
+      uses: actions/checkout@v1
+    - name: Deploy to sproduction cluster
+      uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+          kubernetes/cc-frontend-deployment.yml
+          kubernetes/cc-frontend-service.yml
+        images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ env.VERSION }}'
+        imagepullsecrets: registrycred
