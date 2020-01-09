@@ -22,10 +22,14 @@ jobs:
         echo ::set-env name=VERSION:: $version
         tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
         echo ::set-env name=TAG:: $tag
-    - name: print VERSION value
-      run: echo $VERSION
-    - name: print TAG value
-      run: echo $TAG
+    - name: Login to Docker
+      uses: azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: ${{ secrets.GITHUB_USERNAME }}
+        password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+    - name: Pull image from registry
+      run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:$TAG docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:$VERSION
 
 
 
