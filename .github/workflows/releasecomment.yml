@@ -33,7 +33,7 @@ jobs:
     - name: Retag docker image
       run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
     - name: push production image 
-      run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION
+      run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
     - name: Set context to staging cluster
       uses: azure/k8s-set-context@v1
       with:
