@@ -29,4 +29,4 @@ jobs:
         name: helm-${{ env.VERSION }}.tgz
         path: helm-${{ env.VERSION }}.tgz
     - name: Installing Helm chart
-      helm install helm-${{ env.VERSION }}.tgz --generate-name --kubeconfig ${{ secrets.KUBE_CONF }}
+      run: helm install helm-${{ env.VERSION }}.tgz --generate-name --kubeconfig ${{ secrets.KUBE_CONF }}
