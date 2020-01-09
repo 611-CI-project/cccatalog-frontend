@@ -28,5 +28,9 @@ jobs:
       with:
         name: helm-${{ env.VERSION }}.tgz
         path: helm-${{ env.VERSION }}.tgz
+    - name: Set context to staging cluster
+      uses: azure/k8s-set-context@v1
+      with:
+        kubeconfig: ${{secrets.KUBE_CONF}}
     - name: Installing Helm chart
-      run: helm install helm-${{ env.VERSION }}.tgz --generate-name --kubeconfig ${{ secrets.KUBE_CONF }}
+      run: helm install helm-${{ env.VERSION }}.tgz --generate-name
