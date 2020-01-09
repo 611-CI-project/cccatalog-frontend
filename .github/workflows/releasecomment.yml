@@ -4,11 +4,11 @@
 #   611-CI-project/cccatalog-frontend
 
 name: Release from feature branch
-on:
-  issue_comment:
-    types: [created, edited]
-    branches:
-      - 'feature/*'
+#on:
+#  issue_comment:
+#    types: [created, edited]
+#    branches:
+#      - 'feature/*'
 
 jobs:
   publish_production_image:
