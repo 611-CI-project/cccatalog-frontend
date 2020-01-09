@@ -19,10 +19,9 @@ jobs:
     - name: Set release version and image tag 
       run: |
         version=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
-        echo ::set-env name=VERSION:: $version
+        echo ::set-env name=VERSION::$version
         tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
-        echo ::set-env name=TAG:: $tag
-        echo ${{env.TAG}} | wc -c
+        echo ::set-env name=TAG::$tag
     - name: Login to Docker
       uses: azure/docker-login@v1
       with:
