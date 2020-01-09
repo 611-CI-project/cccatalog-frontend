@@ -149,13 +149,11 @@ jobs:
         docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ github.sha }}
 
   helm:
-    name: Package helm chart
+    name: Package Helm chart
     runs-on: ubuntu-latest
     steps:
-    - name: Package
-      run: |
-        export 'VERSION=1.0.0.'
-        helm install helm helm
+    - name: 
+      run: helm install helm helm --set=version=1.1.2 --app-version=1.0.0
 
   kubernetes:
       needs: [publish_image]
