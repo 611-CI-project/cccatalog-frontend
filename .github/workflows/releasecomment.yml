@@ -17,7 +17,9 @@ jobs:
     name: check if triggered
     steps: 
     - name: Set release value
-      run: echo ::set-env name=action_state::yellow
+      run: |
+        version=$(echo ${{ github.event.comment.body }} | awk '{print $2}')
+        echo ::set-env name=action_state:: $version
     - name: print variable value
       run: echo $action_state
 
