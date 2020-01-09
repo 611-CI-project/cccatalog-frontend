@@ -34,7 +34,7 @@ jobs:
       run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
     - name: push production image 
       run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
-    - name: Set context to staging cluster
+    - name: Set context for production cluster
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{secrets.KUBE_CONFIG_TEST}}
@@ -42,7 +42,7 @@ jobs:
       id: setcontext
     - name: Checkout repo
       uses: actions/checkout@v1
-    - name: Deploy to staging cluster
+    - name: Deploy to sproduction cluster
       uses: Azure/k8s-deploy@v1
       with:
         manifests: |
