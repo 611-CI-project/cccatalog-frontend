@@ -29,7 +29,14 @@ jobs:
         username: ${{ secrets.GITHUB_USERNAME }}
         password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
     - name: Pull image from registry
+      run: docker pull docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}}
+    - name: Retag docker image
       run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
+    - name: push production image 
+      run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
+
+
+
 
 
 
