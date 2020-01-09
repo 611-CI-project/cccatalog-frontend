@@ -29,6 +29,6 @@ jobs:
         name: helm-0.1.0.tgz
         path: helm-0.1.0.tgz
     - name: Export Kubeconfig
-      run: export $KUBECONFIG=${{ secrets.KUBE_CONF }}
+      run: export KUBECONFIG=${{ secrets.KUBE_CONF }}
     - name: Installing Helm chart
       run: helm install helm-0.1.0.tgz --generate-name
