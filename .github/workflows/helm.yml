@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.comment.body, '/release')
     steps: 
+    - name: Checkout repository code
+      uses: actions/checkout@v1
     - name: Set release version and image tag 
       run: |
         version=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
@@ -20,7 +22,7 @@ jobs:
       run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
     - name: Packaging Helm chart
       run: |
-        helm package helm --set version=${{ env.VERSION }} --app-version=${{ env.VERSION }}
+        helm package helm --set version=${{ env.VERSION }} --app-version=${{ env.VERSION }} --generate-name
         ls | grep helm
     - name: Uploading Helm chart
       uses: actions/upload-artifact@v1
