@@ -18,9 +18,11 @@ jobs:
     steps: 
     - name: Set version value and image tag
       run: echo $VERSION
+    - name: Check variable
+      run: echo $TAG
       env:
         VERSION: $(echo "${{github.event.comment.body}}" | awk '{print $2}')
-    - name: Check variable
-      run: echo ${{ $VERSION }}
+        TAG: $(echo "${{github.event.comment.body}}" | awk '{print $4}')
+
 
 
