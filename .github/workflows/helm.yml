@@ -1,0 +1,29 @@
+name: Release from feature branch
+on:
+  issue_comment:
+    types: [created, edited]
+    branches:
+      - 'feature/*'
+jobs:
+  helm:
+    name: Package Helm chart
+    runs-on: ubuntu-latest
+    if: contains(github.event.comment.body, '/release')
+    steps: 
+    - name: Set release version and image tag 
+      run: |
+        version=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
+        echo ::set-env name=VERSION::$version
+        tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
+        echo ::set-env name=TAG::$tag
+    - name: Packaging Helm chart
+      run: |
+        helm package helm --set version=${{ env.VERSION }} --app-version=${{ env.VERSION }}
+        ls | grep helm
+    - name: Uploading Helm chart
+      uses: actions/upload-artifact@v1
+      with:
+        name: helm-${{ env.VERSION }}.tgz
+        path: helm-${{ env.VERSION }}.tgz
+    - name: Installing Helm chart
+      run: helm install helm-${{ env.VERSION }}.tgz
