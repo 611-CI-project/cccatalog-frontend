@@ -17,4 +17,4 @@ jobs:
     name: check if triggered
     steps: 
     - name: Check for comment value
-      run: echo "${{github.event.comment.body}}"
+      run:  ''${{github.event.comment.body}}' | grep -oP [^\/release ].*[\d]$''
