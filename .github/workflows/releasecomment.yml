@@ -22,6 +22,7 @@ jobs:
         echo ::set-env name=VERSION:: $version
         tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
         echo ::set-env name=TAG:: $tag
+        echo $TAG | wc -c
     - name: Login to Docker
       uses: azure/docker-login@v1
       with:
