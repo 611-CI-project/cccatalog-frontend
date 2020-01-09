@@ -22,12 +22,11 @@ jobs:
       run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
     - name: Packaging Helm chart
       run: |
-        helm package helm --set version=${{ env.VERSION }} --app-version=${{ env.VERSION }}
-        ls | grep helm
+        helm package helm --set version=${{ env.VERSION }} --app-version=0.1.0
     - name: Uploading Helm chart
       uses: actions/upload-artifact@v1
       with:
-        name: helm-${{ env.VERSION }}.tgz
-        path: helm-${{ env.VERSION }}.tgz
+        name: helm-0.1.0.tgz
+        path: helm-0.1.0.tgz
     - name: Installing Helm chart
-      run: helm install helm-${{ env.VERSION }}.tgz
+      run: helm install helm-0.1.0.tgz
