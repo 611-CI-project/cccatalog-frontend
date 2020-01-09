@@ -38,9 +38,8 @@ jobs:
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{secrets.KUBE_CONF_TEST}}
+        context: "prod"
       id: setcontext
-    - name: check contexts
-      run: kubectl config get-contexts
     - name: Checkout repo
       uses: actions/checkout@v1
     - name: Deploy to sproduction cluster
