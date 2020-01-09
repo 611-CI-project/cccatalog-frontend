@@ -11,7 +11,7 @@ on:
       - 'feature/*'
 
 jobs:
-  publish:
+  publish_production_image:
     runs-on: ubuntu-latest
     if: contains(github.event.comment.body, '/release')
     name: Get values for version and tag
@@ -34,7 +34,27 @@ jobs:
       run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
     - name: push production image 
       run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
-
+  
+  
+  kubernetes:
+    needs: [publish_production_image]
+    runs-on: ubuntu-latest
+    name: Deploy to staging kubernetes cluster
+    steps:
+    - name: Set context to staging cluster
+      uses: azure/k8s-set-context@v1
+      with:
+        kubeconfig: ${{secrets.KUBE_CONF}}
+      id: setcontext
+    - name: Deploy to staging cluster
+      uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+          kubernetes/cc-frontend-deployment.yml
+          kubernetes/cc-frontend-service.yml
+        images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ publish_production.env.TAG }}'
+        imagepullsecrets: regcred
+    
 
 
 
