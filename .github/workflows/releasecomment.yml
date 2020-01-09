@@ -21,6 +21,6 @@ jobs:
       env:
         VERSION: $(echo "${{github.event.comment.body}}" | awk '{print $2}')
     - name: Check variable
-      run: echo $VERSION
+      run: echo ${{ VERSION }}
 
 
