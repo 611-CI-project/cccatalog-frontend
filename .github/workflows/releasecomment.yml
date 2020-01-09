@@ -39,6 +39,8 @@ jobs:
       with:
         kubeconfig: ${{secrets.KUBE_CONF}}
       id: setcontext
+    - name: Checkout repo
+      uses: actions/checkout@v1
     - name: Deploy to staging cluster
       uses: Azure/k8s-deploy@v1
       with:
