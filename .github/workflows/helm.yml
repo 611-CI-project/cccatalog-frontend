@@ -43,5 +43,5 @@ jobs:
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{secrets.KUBE_CONF2}}
-    - name: Installing Helm chart to cluster
-      run: helm install helm-${{ env.VERSION }}.tgz --generate-name
+    - name: Upgrading Helm chart in production cluster to latest version
+      run: helm upgrade helm helm-${{ env.VERSION }}.tgz --install
