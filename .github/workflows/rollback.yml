@@ -1,4 +1,4 @@
-name: Release from feature branch
+name: Rollback production release
 on:
   issue_comment:
     types: [created, edited]
