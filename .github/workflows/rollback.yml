@@ -21,4 +21,4 @@ jobs:
       with:
         kubeconfig: ${{secrets.KUBE_CONF2}}
     - name: Rolling back helm chart to specified revision
-      run: helm rollback helm REVISION
+      run: helm rollback helm ${{ env.REVISION }}
