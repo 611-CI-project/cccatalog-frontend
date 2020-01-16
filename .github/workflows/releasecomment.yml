@@ -1,51 +1,47 @@
-
-
-#   Release pipeline
-#   611-CI-project/cccatalog-frontend
-
 name: Release from feature branch
-#on:
-#  issue_comment:
-#    types: [created, edited]
-#    branches:
-#      - 'feature/*'
-
+on:
+  issue_comment:
+    types: [created, edited]
+    branches:
+      - 'feature/*'
 jobs:
-  publish_production_image:
+  helm:
+    name: Publish Helm chart
     runs-on: ubuntu-latest
     if: contains(github.event.comment.body, '/release')
-    name: Get values for version and tag
     steps: 
+    - name: Checkout repository code
+      uses: actions/checkout@v1
     - name: Set release version and image tag 
       run: |
         version=$(echo "${{ github.event.comment.body }}" | awk '{print $2}')
         echo ::set-env name=VERSION::$version
         tag=$(echo "${{ github.event.comment.body }}" | awk '{print $4}')
         echo ::set-env name=TAG::$tag
-    - name: Login to Docker
+    - name: Updating Helm to latest 3.x
+      run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - name: Logging into Docker image registry
       uses: azure/docker-login@v1
       with:
         login-server: docker.pkg.github.com
         username: ${{ secrets.GITHUB_USERNAME }}
         password: ${{ secrets.GITHUB_ACCESS_TOKEN }}
-    - name: Pull image from registry
+    - name: Pulling commit image from registry
       run: docker pull docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}}
-    - name: Retag docker image
+    - name: Retaging commit image as release version
       run: docker tag docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.TAG}} docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
-    - name: push production image 
+    - name: Pushing release-tagged production image to registry
       run: docker push docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{env.VERSION}}
-    - name: Set context for production cluster
+    - name: Packaging Helm chart for new release image
+      run: helm package helm --set=version=${{ env.VERSION }} --app-version=${{ env.VERSION }} --version=${{ env.VERSION }}
+    - name: Uploading Helm chart as build artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: helm-${{ env.VERSION }}.tgz
+        path: helm-${{ env.VERSION }}.tgz
+    - name: Setting cluster context to production cluster
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{secrets.KUBE_CONF2}}
-      id: setcontext
-    - name: Checkout repo
-      uses: actions/checkout@v1
-    - name: Deploy to sproduction cluster
-      uses: Azure/k8s-deploy@v1
-      with:
-        manifests: |
-          kubernetes/cc-frontend-deployment.yml
-          kubernetes/cc-frontend-service.yml
-        images: 'docker.pkg.github.com/611-ci-project/cccatalog-frontend/cccatalog:${{ env.VERSION }}'
-        imagepullsecrets: registrycred
+    - name: Upgrading Helm chart in production cluster to latest version
+      run: helm upgrade helm helm-${{ env.VERSION }}.tgz --install
