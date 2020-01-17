@@ -29,6 +29,7 @@
           <br />
           Learn more about CC licenses <a href="https://creativecommons.org/share-your-work/licensing-types-examples/" target="_blank" rel="noopener">here</a>.
         </p>
+        <p><b>Revision 1!</b></p>
     </div>
     <div class="old-search-link">
       <span>
