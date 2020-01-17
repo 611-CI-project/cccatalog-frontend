@@ -51,9 +51,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ env.TAG }}
-        release_name: Release ${{ env.TAG }}
+        tag_name: ${{ env.VERSION }}
+        release_name: Release ${{ env.VERSION }}
         body: |
-          Automatic release of ${{ env.TAG }} from release pipeline.
+          Automatic release of ${{ env.VERSION }} from release pipeline.
         draft: false
         prerelease: false
