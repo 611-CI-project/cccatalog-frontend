@@ -1,4 +1,4 @@
-name: Release from feature branch
+name: Pull request comment
 on:
   issue_comment:
     types: [created, edited]
