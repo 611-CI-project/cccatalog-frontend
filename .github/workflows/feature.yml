@@ -56,7 +56,7 @@ jobs:
         run: npm ci
       - name: Run unit testing 
         run: CI=true npm test  >> ./coverage/code_coverage
-      - name: Upload build artifacts
+      - name: Upload test report
         uses: actions/upload-artifact@v1
         with:
           name: coverage
