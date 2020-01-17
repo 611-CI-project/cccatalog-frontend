@@ -2,9 +2,9 @@
 
 <p align="center">
 
-![](https://github.com/611-CI-project/cccatalog-frontend/workflows/pullrequest/badge.svg?branch=feature)
+![](https://github.com/611-CI-project/cccatalog-frontend/workflows/pullrequest/badge.svg)
 
-![](https://github.com/611-CI-project/cccatalog-frontend/workflows/releasecomment/badge.svg?branch=feature)
+![](https://github.com/611-CI-project/cccatalog-frontend/workflows/releasecomment/badge.svg)
 
 ![](https://github.com/611-CI-project/cccatalog-frontend/workflows/feature/<branch>/badge.svg)
 
